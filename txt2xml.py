@@ -1,3 +1,10 @@
+######################
+
+## Author : Jash Shah
+## Date : 31/3/21
+
+###################
+
 """
 Directory Structure of the Dataset should be as follows. (The topmost row denotes outermost directory)
  
@@ -36,7 +43,7 @@ def convert2xml( folder , name , df_main , df , h, w , c):
 
     df_modified = df_modified.drop( ['index','ImageID','Source','Confidence'], axis = 1)
     print(df_modified.head())
-    input("Continue?")      # Interrupt added for testing the code.
+    #input("Continue?")      # Interrupt added for testing the code.
     
     #####################################################################################################
     
@@ -49,48 +56,46 @@ def convert2xml( folder , name , df_main , df , h, w , c):
     
     size = ET.SubElement(annotation, 'size')
     width = ET.SubElement(size, 'width')
-    width.text = w
+    width.text = str(w)
     height = ET.SubElement(size, 'height')
-    height.text = h
+    height.text = str(h)
     depth = ET.SubElement(size, 'depth')
-    depth.text = c
+    depth.text = str(c)
     
     for i,rows in df_modified.iterrows():
         obj = ET.SubElement(annotation, 'object')
         
-        name = ET.SubElement(obj, 'name')
-        name.text = str(rows['LabelName'])
+        Name = ET.SubElement(obj, 'name')
+        Name.text = str(rows['LabelName'])
         inside = ET.SubElement(obj, 'inside')
-        inside.text = rows['IsInside']
+        inside.text = str(rows['IsInside'])
         truncated = ET.SubElement(obj, 'truncated')
-        truncated.text = rows['IsTruncated']
+        truncated.text = str(rows['IsTruncated'])
         occluded = ET.SubElement(obj, 'occluded')
-        occluded.text = rows['IsOccluded']
+        occluded.text = str(rows['IsOccluded'])
         groupof = ET.SubElement(obj, 'groupof')
-        groupof.text = rows['IsGroupOf']
+        groupof.text = str(rows['IsGroupOf'])
         depiction = ET.SubElement(obj, 'depiction')
-        depiction.text = rows['IsDepiction']
+        depiction.text = str(rows['IsDepiction'])
 
         bbox = ET.SubElement(obj, 'bndbox')
         
         xmin_value = float(rows['XMin']) * w
         xmin = ET.SubElement(bbox, 'xmin')
-        xmin.text = xmin_value
+        xmin.text = str(xmin_value)
         
         ymin_value = float(rows['YMin']) * h
         ymin = ET.SubElement(bbox, 'ymin')
-        ymin.text = ymin_value
+        ymin.text = str(ymin_value)
 
         xmax_value = float(rows['XMax']) * w
         xmax = ET.SubElement(bbox, 'xmax')
-        xmax.text = xmax_value
+        xmax.text = str(xmax_value)
         
         ymax_value = float(rows['YMax']) * h
         ymax = ET.SubElement(bbox, 'ymax')
-        ymax.text = ymax_value
-
-    # End of one object
-
+        ymax.text = str(ymax_value)
+        # End of one object
 
     # Writing in XML file
     xml_folder = output_folder + "/xml_files"
@@ -98,11 +103,12 @@ def convert2xml( folder , name , df_main , df , h, w , c):
         os.mkdir(xml_folder)
     except:
         pass
-    xml_file = xml_folder + "/" +name + ".xml"
+    xml_file = xml_folder + "/" + name + ".xml"
+    print("\n Completed the xml generation. Now saving the files as ", xml_file)
 
     # Saving the XMl document now
     mydata = ET.tostring(annotation)
-    myfile = open(xml_file, "w")
+    myfile = open(xml_file, "wb")
     myfile.write(mydata)
     
 # End of Function

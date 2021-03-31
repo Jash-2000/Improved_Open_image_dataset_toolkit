@@ -1,7 +1,5 @@
 # ---------------
-# Date: 7/19/2018
-# Place: Biella/Torino
-# Author: EscVM & TArt
+# Author: Jash Shah
 # Project: OID v4
 # ---------------
 

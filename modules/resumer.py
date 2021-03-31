@@ -1,3 +1,10 @@
+##############################
+
+    ## Author : Jash Shah
+    ## Project : Visual Semantics, INSPIRE Labs, BITS Pilani
+
+##########################
+
 import pandas as pd
 import glob
 
