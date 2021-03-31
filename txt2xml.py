@@ -21,14 +21,12 @@ import os
 import numpy as np
 import pandas as pd
 import cv2
-print("Requirements are fullfilled\n")
 
 def convert2xml( folder , name , df_main , df , h, w , c):
     df_modified = pd.DataFrame(columns=['ImageID','Source','LabelName','Confidence','XMin','XMax','YMin','YMax','IsOccluded','IsTruncated','IsGroupOf','IsDepiction','IsInside'])
-
+    
     for i,rows in df_main.iterrows():
         flag = 0 
-        
         if str(name) == str(rows['ImageID']):
             
             for j,r in df.iterrows():
@@ -39,15 +37,19 @@ def convert2xml( folder , name , df_main , df , h, w , c):
             new_rows = []
             if flag == 1:
                 new_rows.append(rows.values)
+                print(new_rows)
+                print(df_modified.head())
                 df_modified = df_modified.append(pd.DataFrame(new_rows, columns=df_modified.columns)).reset_index()
-
-    df_modified = df_modified.drop( ['index','ImageID','Source','Confidence'], axis = 1)
-    print(df_modified.head())
+                df_modified = df_modified.drop( ['index'], axis = 1)            
+                print(df_modified.head())
+                input("\n Continue the next object??")
+                
+    df_modified = df_modified.drop( ['ImageID','Source','Confidence'], axis = 1)
     #input("Continue?")      # Interrupt added for testing the code.
     
     #####################################################################################################
     
-    print("\nCreating the xml files for the file : ",name,".jpg")
+    print("\n Creating the xml files for the file : ",name,".jpg")
     image_name = name + ".jpg"
     
     annotation = ET.Element('annotation')
@@ -111,6 +113,10 @@ def convert2xml( folder , name , df_main , df , h, w , c):
     myfile = open(xml_file, "wb")
     myfile.write(mydata)
     
+    del df_modified
+    del df_main
+    del df
+
 # End of Function
 ################################################################################################################
 
@@ -126,7 +132,7 @@ for i,row in df.iterrows():
     if row["Classes"] not in Mylist:
         df = df.drop(index = i, axis = 0)
 
-print("Printing the dataframe containing just the required classes\n")
+print("\nPrinting the dataframe containing just the required classes\n")
 print(df)
 input("\n Press any key to continue")
 
@@ -144,6 +150,7 @@ for files in os.listdir(input_folder):
             for file_name in os.listdir(input_folder + files + "/" + file):
                 im = cv2.imread(input_folder + files + "/" + file + "/" + file_name)
                 h,w,c = im.shape
+                input("\nContinue?")
                 if (str(file_name)[-4:] == ".jpg" ):            
                     convert2xml(output_folder, str(file_name)[:-4], df_test, df, h, w, c)
 
