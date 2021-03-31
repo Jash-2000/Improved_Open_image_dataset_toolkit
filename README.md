@@ -1,10 +1,27 @@
-# Open Image Dataset Downloder Toolkit
+# Open Image Downloader Toolkit
 
-This repo has been forked from [cavidparker](https://github.com/cavidparker/open_image_dataset_downloader) with the sole reason of adding **__Resumeable__ and __version switching__** features in the standard toolkit. This would be useful in case the user has connectivity issues or power outrages. Also, I have updated the readme to provide comprehensive instructions of use. 
+![](https://github.com/Jash-2000/Improved_Open_image_dataset_toolkit/blob/main/images/Diff_Folder.JPG)
 
-For getting more information about Open Images Dataset, please go through [Info.md](https://github.com/Jash-2000/open_image_dataset_downloader/blob/main/Info.md) file. 
+This repo is an **improved wrapper** to the standerd Open-Image-Toolkit with the sole reason of making the following changes :
+
+  1. Added **__Resumeable__ ** features in the standard toolkit.This would be useful in case the user has connectivity issues or power outrages.
+  2. Employed **__version switching__** in the code base. 
+  3. The repo also contains **txt2xml.py** file that converts the labels in xml format that would be useful for using it with Darknet - Yolo. Simply run the file after changing the input and output folder paths 
+  4. I have updated the readme to provide comprehensive instructions of use. 
+
+---
+
+For getting more information about Open Images Dataset, please go through [Info.md](https://github.com/Jash-2000/Improved_Open_image_dataset_toolkit/blob/main/Info.md) file. 
 
 ## Downloading required files
+
+**Automatic Download Option**
+![Custom Downloader](https://github.com/Jash-2000/Improved_Open_image_dataset_toolkit/blob/main/images/Custom%20Downloader.JPG)
+
+The required modules are present in requirements.txt and can be installed using 
+```python
+    pip install requirements.txt -r
+```
 
 For downloading the bounding box csv files 
 * Follow the instructions provided at the official link of [Open-Images Dataset](https://storage.googleapis.com/openimages/web/download.html). You would be required to download the 4 csv files as explained over here. 
